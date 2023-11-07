@@ -1,15 +1,48 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+const shell = require('shelljs')
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
+  const BROKER_TYPE = core.getInput('BROKER_TYPE').toLowerCase()
+  process.env.SOLACE_MESSAGING_SERVICE = core.getInput('SOLACE_MESSAGING_SERVICE');
+  process.env.SOLACE_CLOUD_TOKEN =   core.getInput('SOLACE_CLOUD_TOKEN');
+  process.env.TF_VAR_confluent_cloud_api_key = core.getInput('TF_VAR_confluent_cloud_api_key');
+  process.env.TF_VAR_confluent_cloud_api_secret = core.getInput('TF_VAR_confluent_cloud_api_secret');
+  process.env.TF_VAR_solace_url = core.getInput('TF_VAR_solace_url');
+  process.env.TF_VAR_semp_username = core.getInput('TF_VAR_semp_username');
+  process.env.TF_VAR_semp_password = core.getInput('TF_VAR_semp_password');
+  process.env.SOL_MSG_VPN = core.getInput('SOL_MSG_VPN');
+  process.env.AWS_ACCESS_KEY_ID = core.getInput('AWS_ACCESS_KEY_ID');
+  process.env.AWS_SECRET_ACCESS_KEY = core.getInput('AWS_SECRET_ACCESS_KEY');
+  
+  if(BROKER_TYPE == "" || process.env.SOLACE_CLOUD_TOKEN == "") {
+    throw new Error(`Set the BROKER_TYPE and the SOLACE_CLOUD_TOKEN input variables`)
+  }
+
+  switch (BROKER_TYPE) {
+    case "solace":
+      if (process.env.TF_VAR_solace_url == "" || process.env.TF_VAR_semp_username == "" || process.env.TF_VAR_semp_password == "" || process.env.SOL_MSG_VPN == "") {
+        throw new Error(`Set all the following variables:\nTF_VAR_solace_url\nTF_VAR_semp_username\nTF_VAR_semp_password\nSOL_MSG_VPN`)
+      }
+      break;
+    case "confluent":
+      if (process.env.TF_VAR_confluent_cloud_api_key == "" || process.env.TF_VAR_confluent_cloud_api_secret == "" || process.env.AWS_ACCESS_KEY_ID == "" || process.env.AWS_SECRET_ACCESS_KEY == undefined) {
+        throw new Error(`Set all the following variables:\nTF_VAR_confluent_cloud_api_key\nTF_VAR_confluent_cloud_api_secret\nAWS_ACCESS_KEY_ID\nAWS_SECRET_ACCESS_KEY`)
+      }
+      break;
+    default:
+      throw new Error(`Broker Type ${BROKER_TYPE} not supported`);
+  }
+
+  shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning ')
+
+  shell.exec('cd solace-terraform-provisioning; npm i; npm run config', (code, stderr) => {
+    if (code != 0) {
+      throw new Error(stderr)
+    }
+  })
+
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }
