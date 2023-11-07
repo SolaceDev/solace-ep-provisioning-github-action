@@ -1,13 +1,36 @@
 name: 'Solace Event Portal Provisioning'
 description: 'Github action enabling Event Portal to Infrastructure provisioning'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  SOLACE_MESSAGING_SERVICE:
+    description: 'SOLACE_MESSAGING_SERVICE'
+    required: false
+  SOLACE_CLOUD_TOKEN:
+    description: 'SOLACE_CLOUD_TOKEN'
+    required: false
+  TF_VAR_confluent_cloud_api_key:
+    description: 'TF_VAR_confluent_cloud_api_key'
+    required: false
+  TF_VAR_confluent_cloud_api_secret:
+    description: 'TF_VAR_confluent_cloud_api_secret'
+    required: false
+  TF_VAR_solace_url:
+    description: 'TF_VAR_solace_url'
+    required: false
+  TF_VAR_semp_username:
+    description: 'TF_VAR_semp_username'
+    required: false
+  TF_VAR_semp_password:
+    description: 'TF_VAR_semp_password'
+    required: false
+  SOL_MSG_VPN:
+    description: 'SOL_MSG_VPN'
+    required: false
+  AWS_ACCESS_KEY_ID:
+    description: 'AWS_ACCESS_KEY_ID'
+    required: false
+  AWS_SECRET_ACCESS_KEY:
+    description: 'AWS_SECRET_ACCESS_KEY'
+    required: false
 runs:
   using: 'node20'
   main: 'dist/index.js'
