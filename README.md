@@ -6,7 +6,7 @@ The provisioning logic is defined in https://github.com/TamimiGitHub/solace-terr
 
 # Inputs
 
-- Broker Type: Solace | Confluent 
+- '`Broker_Type`': Solace | Confluent 
 
 ## The following input variables are required for Confluent provisioning
 
