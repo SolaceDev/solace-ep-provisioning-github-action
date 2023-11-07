@@ -1,6 +1,9 @@
 name: 'Solace Event Portal Provisioning'
 description: 'Github action enabling Event Portal to Infrastructure provisioning'
 inputs:
+  Broker_Type:
+    description: 'Solace | Confluent'
+    required: true
   SOLACE_MESSAGING_SERVICE:
     description: 'SOLACE_MESSAGING_SERVICE'
     required: false

@@ -33273,7 +33273,7 @@ try {
 
   shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning ')
 
-  shell.exec('cd solace-terraform-provisioning; npm i; npm run config', (code, stderr) => {
+  shell.exec('cd solace-terraform-provisioning; npm i; npm run provision', (code, stderr) => {
     if (code != 0) {
       throw new Error(stderr)
     }
