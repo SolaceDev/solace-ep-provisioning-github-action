@@ -1,7 +1,8 @@
 name: 'Solace Event Portal Provisioning'
 description: 'Github action enabling Event Portal to Infrastructure provisioning'
-icon: download-cloud
-color: green
+branding:
+  icon: 'download-cloud'
+  color: 'green'
 inputs:
   Broker_Type:
     description: 'Solace | Confluent'
