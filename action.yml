@@ -37,6 +37,10 @@ inputs:
   AWS_SECRET_ACCESS_KEY:
     description: 'AWS_SECRET_ACCESS_KEY'
     required: false
+  APPLICATION_VERSION_ID:
+    description: 'The application version ID to be promoted'
+    required: false
+    default: ""
 runs:
   using: 'node20'
   main: 'dist/index.js'
