@@ -29,12 +29,12 @@ The provisioning logic is defined in https://github.com/TamimiGitHub/solace-terr
 <summary> <b> Required environment variables for Confluent provisioning </b></summary>
 
 | Env variable name  | Required/Optional | Description | Default |
-| ------------- | ------------- | ------------- | ------------- |
+| ------------- | ------------- | ------------- | ------------- | 
 | `SOLACE_CLOUD_TOKEN`  | Required  | Solace Cloud token | NA |
-| `TF_VAR_solace_url`  | Required  | Solace Broker URL | NA |
-| `TF_VAR_semp_username`  | Required  | Solace Broker SEMP username | NA |
-| `TF_VAR_semp_password`  | Required  | Solace Broker SEMP password | NA |
-| `SOL_MSG_VPN`  | Required  | Solace Broker message VPN | terraform |
+| `TF_VAR_confluent_cloud_api_key`  | Required  | Confluent cloud API Key with global access type| NA |
+| `TF_VAR_confluent_cloud_api_secret`  | Required  | Confluent cloud API Secret with global access type| NA |
+| `AWS_ACCESS_KEY_ID`  | Required  | AWS Key ID | NA |
+| `AWS_SECRET_ACCESS_KEY`  | Required  | AWS Access Key | NA |
 | `SOLACE_MESSAGING_SERVICE`  | Optional  | The target messaging service to provision | The first messaging service in EP |
 
 </details>
