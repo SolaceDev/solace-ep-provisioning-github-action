@@ -42,7 +42,7 @@ The provisioning logic is defined in https://github.com/TamimiGitHub/solace-terr
 ## Example usage
 
 ```yaml
-uses: SolaceDev/solace-ep-provisioning-github-action@v1.2
+uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.1
 with:
   BROKER_TYPE: confluent
   SOLACE_MESSAGING_SERVICE: ${{ secrets.SOLACE_MESSAGING_SERVICE }}
@@ -54,7 +54,7 @@ with:
 ```
 
 ```yaml
-uses: SolaceDev/solace-ep-provisioning-github-action@v1.2
+uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.1
 with:
   BROKER_TYPE: solace
   SOLACE_MESSAGING_SERVICE: ${{ secrets.SOLACE_MESSAGING_SERVICE }}
