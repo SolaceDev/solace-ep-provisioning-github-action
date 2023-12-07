@@ -1,8 +1,9 @@
 name: "Publish GitHub Action"
-on:
-  push:
-    tags: 
-      - v**
+on: 
+  workflow_run:
+    workflows: [Publish GitHub Action]
+    types: 
+      - completed
 
 jobs:
   publish:

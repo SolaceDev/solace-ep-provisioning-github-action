@@ -33241,6 +33241,7 @@ const shell = __nccwpck_require__(3516)
 
 try {
   const BROKER_TYPE = core.getInput('BROKER_TYPE').toLowerCase()
+  const APPLICATION_VERSION_ID = core.getInput('APPLICATION_VERSION_ID')
   process.env.SOLACE_MESSAGING_SERVICE = core.getInput('SOLACE_MESSAGING_SERVICE');
   process.env.SOLACE_CLOUD_TOKEN =   core.getInput('SOLACE_CLOUD_TOKEN');
   process.env.TF_VAR_confluent_cloud_api_key = core.getInput('TF_VAR_confluent_cloud_api_key');
@@ -33270,10 +33271,21 @@ try {
     default:
       throw new Error(`Broker Type ${BROKER_TYPE} not supported`);
   }
+  console.log(`APPLICATION_VERSION_ID: ${APPLICATION_VERSION_ID}`)
 
-  shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning ')
+  shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning; cd solace-terraform-provisioning; npm i')
+  
+  if(APPLICATION_VERSION_ID != "none") {
+    console.log(`Promoting Application Version ID ${APPLICATION_VERSION_ID}`)
+    shell.exec(`npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
+      if (code != 0) {
+        throw new Error(stderr)
+      }
+    })
+  }
 
-  shell.exec('cd solace-terraform-provisioning; npm i; npm run provision', (code, stderr) => {
+
+  shell.exec('npm run provision', (code, stderr) => {
     if (code != 0) {
       throw new Error(stderr)
     }
