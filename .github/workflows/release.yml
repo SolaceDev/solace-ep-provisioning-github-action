@@ -1,7 +1,7 @@
 name: "Publish GitHub Action"
 on: 
   workflow_run:
-    workflows: [Publish GitHub Action]
+    workflows: [Bump Version]
     types: 
       - completed
 
