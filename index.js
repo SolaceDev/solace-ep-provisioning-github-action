@@ -35,8 +35,10 @@ try {
   }
 
   shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning; cd solace-terraform-provisioning; npm i')
-
-  if(APPLICATION_VERSION_ID != "") {
+  
+  console.log(APPLICATION_VERSION_ID)
+  if(APPLICATION_VERSION_ID != "none") {
+    console.log(`Promoting Application Version ID ${APPLICATION_VERSION_ID}`)
     shell.exec(`npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
