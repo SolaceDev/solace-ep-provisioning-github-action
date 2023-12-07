@@ -33,13 +33,12 @@ try {
     default:
       throw new Error(`Broker Type ${BROKER_TYPE} not supported`);
   }
-  console.log(`APPLICATION_VERSION_ID: ${APPLICATION_VERSION_ID}`)
 
   shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning; cd solace-terraform-provisioning; npm i')
   
   if(APPLICATION_VERSION_ID != "none") {
     console.log(`Promoting Application Version ID ${APPLICATION_VERSION_ID}`)
-    shell.exec(`npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
+    shell.exec(`cd solace-terraform-provisioning; npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
       }
@@ -47,7 +46,7 @@ try {
   }
 
 
-  shell.exec('npm run provision', (code, stderr) => {
+  shell.exec('cd solace-terraform-provisioning; npm run provision', (code, stderr) => {
     if (code != 0) {
       throw new Error(stderr)
     }
