@@ -14,9 +14,6 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: 'cat package.json'
-        run: cat ./package.json
-
       - name: 'Automated Version Bump'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
@@ -25,17 +22,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 'cat package.json'
-        run: cat ./package.json
-      - name: 'Output Step'
-        env:
-          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-        run: echo "new tag $NEW_TAG"
-
-  # publish:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   - uses: tgymnich/publish-github-action@v1
-  #     with:
-  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: tgymnich/publish-github-action@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
