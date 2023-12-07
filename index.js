@@ -33,7 +33,7 @@ try {
     default:
       throw new Error(`Broker Type ${BROKER_TYPE} not supported`);
   }
-  console.log(`APPLICATION_VERSION_ID: ${APPLICATION_VERSION_ID}`)
+  console.log(`YOLO APPLICATION_VERSION_ID: ${APPLICATION_VERSION_ID}`)
 
   shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning; cd solace-terraform-provisioning; npm i')
   

@@ -1,29 +1,11 @@
 name: "Publish GitHub Action"
 on:
   push:
-    branches: [ main ]
+    tags: 
+      - v**
 
 jobs:
-  bump-version:
-    name: 'Bump Version on master'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 'Checkout source code'
-        uses: 'actions/checkout@v2'
-        with:
-          ref: ${{ github.ref }}
-
-      - name: 'Automated Version Bump'
-        id: version-bump
-        uses: 'phips28/gh-action-bump-version@master'
-        with:
-          tag-prefix: 'v'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   publish:
-    needs: bump-version
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
