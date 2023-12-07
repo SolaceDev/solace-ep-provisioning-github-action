@@ -1,6 +1,6 @@
 {
   "name": "solace-ep-provisioning-github-action",
-  "version": "1.9.10",
+  "version": "1.9.11",
   "description": "Github action enabling Event Portal to Infrastructure provisioning",
   "main": "dist/index.js",
   "scripts": {
