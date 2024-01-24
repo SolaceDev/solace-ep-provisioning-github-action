@@ -4,6 +4,7 @@ const shell = require('shelljs')
 try {
   const BROKER_TYPE = core.getInput('BROKER_TYPE').toLowerCase()
   const APPLICATION_VERSION_ID = core.getInput('APPLICATION_VERSION_ID')
+  const PLAN_ONLY = core.getInput('PLAN_ONLY')
   process.env.SOLACE_MESSAGING_SERVICE = core.getInput('SOLACE_MESSAGING_SERVICE');
   process.env.SOLACE_CLOUD_TOKEN =   core.getInput('SOLACE_CLOUD_TOKEN');
   process.env.TF_VAR_confluent_cloud_api_key = core.getInput('TF_VAR_confluent_cloud_api_key');
