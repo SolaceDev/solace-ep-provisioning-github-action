@@ -33277,10 +33277,10 @@ try {
   
   if(APPLICATION_VERSION_ID != "none") {
     console.log(`Promoting Application Version ID ${APPLICATION_VERSION_ID}`)
-    shell.exec(`cd solace-terraform-provisioning; npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
-      if (code != 0) {
-        throw new Error(stderr)
-      }
+    promote_application(APPLICATION_VERSION_ID, process.env.SOLACE_MESSAGING_SERVICE).then(res =>{
+      console.log(res)
+    }).catch(err => {
+      throw new Error(err)
     })
   }
 
@@ -33304,6 +33304,16 @@ try {
   core.setFailed(error.message);
 }
 
+function promote_application(APPLICATION_VERSION_ID, SOLACE_MESSAGING_SERVICE) {
+  return new Promise((resolve, reject) =>{
+    shell.exec(`cd solace-terraform-provisioning; npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE}`, (code, stdout, stderr) => {
+      if (code != 0) {
+        reject(stderr)
+      }
+      resolve(stdout)
+    })
+  })
+}
 })();
 
 module.exports = __webpack_exports__;
