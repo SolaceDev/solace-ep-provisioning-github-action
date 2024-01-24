@@ -33283,12 +33283,19 @@ try {
     })
   }
 
-
-  shell.exec('cd solace-terraform-provisioning; npm run provision', (code, stderr) => {
-    if (code != 0) {
-      throw new Error(stderr)
-    }
-  })
+  if(PLAN_ONLY != "none") {
+    shell.exec(`cd solace-terraform-provisioning; npm run plan; npm run promote -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
+      if (code != 0) {
+        throw new Error(stderr)
+      }
+    })  
+  } else{
+    shell.exec('cd solace-terraform-provisioning; npm run provision', (code, stderr) => {
+      if (code != 0) {
+        throw new Error(stderr)
+      }
+    })
+  } 
 
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
