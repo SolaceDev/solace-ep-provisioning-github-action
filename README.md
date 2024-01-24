@@ -10,6 +10,7 @@ The provisioning logic is defined in https://github.com/TamimiGitHub/solace-terr
 - `AWS_ACCESS_KEY_ID`: AWS Access Key ID to read/write terraform state files on S3 bucket
 - `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key to read/write terraform state files on S3 bucket
 - `APPLICATION_VERSION_ID`: Application Version ID to promote
+- `PLAN_ONLY`: If you want to only run a plan
 
 <details>
 <summary> <b> Required environment variables for Solace provisioning </b></summary>
