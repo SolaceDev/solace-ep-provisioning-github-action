@@ -47,7 +47,7 @@ try {
   }
 
   if(PLAN_ONLY != "none") {
-    shell.exec(`cd solace-terraform-provisioning; npm run plan; npm run plan -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
+    shell.exec(`cd solace-terraform-provisioning; npm run plan; npm run promote -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
       }
