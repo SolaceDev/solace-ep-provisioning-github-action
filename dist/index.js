@@ -33275,23 +33275,28 @@ try {
 
   shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning; cd solace-terraform-provisioning; npm i')
   
-  if(APPLICATION_VERSION_ID != "none") {
-    console.log(`Promoting Application Version ID ${APPLICATION_VERSION_ID}`)
-    promote_application(APPLICATION_VERSION_ID, process.env.SOLACE_MESSAGING_SERVICE).then(res =>{
-      console.log(res)
-    }).catch(err => {
-      throw new Error(err)
-    })
-  }
+  // if(APPLICATION_VERSION_ID != "none") {
+  //   console.log(`Promoting Application Version ID ${APPLICATION_VERSION_ID}`)
+  //   promote_application(APPLICATION_VERSION_ID, process.env.SOLACE_MESSAGING_SERVICE).then(res =>{
+  //     console.log(res)
+  //   }).catch(err => {
+  //     throw new Error(err)
+  //   })
+  // }
 
   if(PLAN_ONLY != "none") {
-    shell.exec(`cd solace-terraform-provisioning; npm run plan; npm run promote -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
+    shell.exec(`cd solace-terraform-provisioning; \
+    npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE}; \
+    npm run plan; \
+    npm run promote -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
       }
     })  
   } else{
-    shell.exec('cd solace-terraform-provisioning; npm run provision', (code, stderr) => {
+    shell.exec('cd solace-terraform-provisioning; \
+    npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE};\
+    npm run provision', (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
       }
@@ -33304,16 +33309,16 @@ try {
   core.setFailed(error.message);
 }
 
-function promote_application(APPLICATION_VERSION_ID, SOLACE_MESSAGING_SERVICE) {
-  return new Promise((resolve, reject) =>{
-    shell.exec(`cd solace-terraform-provisioning; npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE}`, (code, stdout, stderr) => {
-      if (code != 0) {
-        reject(stderr)
-      }
-      resolve(stdout)
-    })
-  })
-}
+// function promote_application(APPLICATION_VERSION_ID, SOLACE_MESSAGING_SERVICE) {
+//   return new Promise((resolve, reject) =>{
+//     shell.exec(`cd solace-terraform-provisioning; npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE}`, (code, stdout, stderr) => {
+//       if (code != 0) {
+//         reject(stderr)
+//       }
+//       resolve(stdout)
+//     })
+//   })
+// }
 })();
 
 module.exports = __webpack_exports__;
