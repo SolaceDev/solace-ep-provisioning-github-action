@@ -33,12 +33,16 @@ inputs:
     required: false
   AWS_ACCESS_KEY_ID:
     description: 'AWS_ACCESS_KEY_ID'
-    required: false
+    required: true
   AWS_SECRET_ACCESS_KEY:
     description: 'AWS_SECRET_ACCESS_KEY'
-    required: false
+    required: true
   APPLICATION_VERSION_ID:
     description: 'The application version ID to be promoted'
+    required: false
+    default: "none"
+  PLAN_ONLY:
+    description: 'Only run terrafrom plan'
     required: false
     default: "none"
 runs:
