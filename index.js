@@ -46,7 +46,7 @@ try {
   //   })
   // }
 
-  const tf_plan = ''
+  let tf_plan = ''
 
   if(PLAN_ONLY != "none") {
     shell.exec(`cd solace-terraform-provisioning; \
