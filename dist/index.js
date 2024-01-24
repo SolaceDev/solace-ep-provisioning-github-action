@@ -33286,7 +33286,7 @@ try {
 
   if(PLAN_ONLY != "none") {
     shell.exec(`cd solace-terraform-provisioning; \
-    npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE}; \
+    npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}; \
     npm run plan; \
     npm run promote -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
       if (code != 0) {
