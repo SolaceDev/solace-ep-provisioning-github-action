@@ -33294,6 +33294,7 @@ try {
       if (code != 0) {
         throw new Error(stderr)
       }
+      console.log(`stdout: ${stdout}`)
       tf_plan = stdout
     })  
   } else{
@@ -33304,10 +33305,10 @@ try {
         throw new Error(stderr)
       }
     })
-  } 
+  }
 
-  const time = (new Date()).toTimeString();
   core.setOutput("tf_plan", tf_plan);
+  core.setOutput("test", "test output");
 } catch (error) {
   core.setFailed(error.message);
 }
