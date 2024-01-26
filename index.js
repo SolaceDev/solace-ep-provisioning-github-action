@@ -58,9 +58,9 @@ try {
       core.setOutput("tf_plan", tf_plan.stdout);
     })
   } else{
-    shell.exec('cd solace-terraform-provisioning; \
-    npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE};\
-    npm run provision', (code, stderr) => {
+    shell.exec(`cd solace-terraform-provisioning; \
+    npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE};\
+    npm run provision`, (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
       }
