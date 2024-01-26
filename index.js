@@ -46,31 +46,26 @@ try {
   //   })
   // }
 
-  let tf_plan = ''
-
   if(PLAN_ONLY != "none") {
     shell.exec(`cd solace-terraform-provisioning; \
     npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}; \
-    npm run plan; \
-    npm run promote -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stdout, stderr) => {
+    npm run plan 2>&1 | tee out.txt; \
+    npm run promote -- -d -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE}`, (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
       }
-      console.log(`stdout: ${stdout}`)
-      tf_plan = stdout
-    })  
+      let tf_plan = shell.cat("solace-terraform-provisioning/out.txt")
+      core.setOutput("tf_plan", tf_plan.stdout);
+    })
   } else{
     shell.exec('cd solace-terraform-provisioning; \
     npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE};\
-    npm run provision', (code, stdout, stderr) => {
+    npm run provision', (code, stderr) => {
       if (code != 0) {
         throw new Error(stderr)
       }
     })
   }
-
-  core.setOutput("tf_plan", tf_plan);
-  core.setOutput("test", "test output");
 } catch (error) {
   core.setFailed(error.message);
 }
