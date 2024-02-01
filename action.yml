@@ -45,6 +45,10 @@ inputs:
     description: 'Only run terrafrom plan'
     required: false
     default: "none"
+  PROMOTE_ONLY:
+    description: 'Only promote the target Application Version ID'
+    required: false
+    default: "none"
 runs:
   using: 'node20'
   main: 'dist/index.js'

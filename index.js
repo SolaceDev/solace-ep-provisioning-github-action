@@ -5,6 +5,7 @@ try {
   const BROKER_TYPE = core.getInput('BROKER_TYPE').toLowerCase()
   const APPLICATION_VERSION_ID = core.getInput('APPLICATION_VERSION_ID')
   const PLAN_ONLY = core.getInput('PLAN_ONLY')
+  const PROMOTE_ONLY = core.getInput('PROMOTE_ONLY')
   process.env.SOLACE_MESSAGING_SERVICE = core.getInput('SOLACE_MESSAGING_SERVICE');
   process.env.SOLACE_CLOUD_TOKEN =   core.getInput('SOLACE_CLOUD_TOKEN');
   process.env.TF_VAR_confluent_cloud_api_key = core.getInput('TF_VAR_confluent_cloud_api_key');
@@ -36,15 +37,16 @@ try {
   }
 
   shell.exec('git clone https://github.com/TamimiGitHub/solace-terraform-provisioning; cd solace-terraform-provisioning; npm i')
-  
-  // if(APPLICATION_VERSION_ID != "none") {
-  //   console.log(`Promoting Application Version ID ${APPLICATION_VERSION_ID}`)
-  //   promote_application(APPLICATION_VERSION_ID, process.env.SOLACE_MESSAGING_SERVICE).then(res =>{
-  //     console.log(res)
-  //   }).catch(err => {
-  //     throw new Error(err)
-  //   })
-  // }
+
+  if(PROMOTE_ONLY != "none") {
+    shell.exec(`cd solace-terraform-provisioning; \
+    npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${process.env.SOLACE_MESSAGING_SERVICE};`, (code, stderr) => {
+      if (code != 0) {
+        throw new Error(stderr)
+      }
+      process.exit(0)
+    })
+  }
 
   if(PLAN_ONLY != "none") {
     shell.exec(`cd solace-terraform-provisioning; \
@@ -69,14 +71,3 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
-
-// function promote_application(APPLICATION_VERSION_ID, SOLACE_MESSAGING_SERVICE) {
-//   return new Promise((resolve, reject) =>{
-//     shell.exec(`cd solace-terraform-provisioning; npm run promote -- -appVID ${APPLICATION_VERSION_ID} -mes ${SOLACE_MESSAGING_SERVICE}`, (code, stdout, stderr) => {
-//       if (code != 0) {
-//         reject(stderr)
-//       }
-//       resolve(stdout)
-//     })
-//   })
-// }
