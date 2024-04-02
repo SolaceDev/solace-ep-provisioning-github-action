@@ -1,4 +1,4 @@
-name: 'Solace Event Portal Provisioning'
+name: 'Solace Event Portal Provisioning using Terrafornm'
 description: 'Github action enabling Event Portal to Infrastructure provisioning'
 branding:
   icon: 'download-cloud'
