@@ -10,13 +10,13 @@ jobs:
 
     steps:
       - name: 'Checkout source code'
-        uses: 'actions/checkout@v2'
+        uses: 'actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e' # v2
         with:
           ref: ${{ github.ref }}
 
       - name: 'Automated Version Bump'
         id: version-bump
-        uses: 'phips28/gh-action-bump-version@master'
+        uses: 'phips28/gh-action-bump-version@63bc5b97aade4390bf3f33416b8adb891a0f28d7' # master
         with:
           tag-prefix: 'v'
         env:
